@@ -1,7 +1,7 @@
 /*
 This is a simple tool to interuppt entering a website. If the site is loaded a message will be displayed to wait for a timer if you want to 'waste' your time on that website.
 
-Having the 'last_executed' being a timer instead of a boolean is so that in the future it can be changed so that the interrupt occures again after a certain time.
+Having 'last_executed' being a timer instead of a boolean is so that in the future it can be changed so that the interrupt occures again after a certain time.
 */
 
 var interrupt_list = ["https://www.youtube.com/", "https://www.reddit.com/"]

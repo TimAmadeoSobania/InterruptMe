@@ -1,13 +1,13 @@
 {
-    "name":"Youtube interrupt",
-    "description":"Interrupt your youtube session",
+    "name":"InterruptMe",
+    "description":"Interrupt your browsing on time wasting sites.",
     "version":"0.1.0",
     "manifest_version":3,
     "content_scripts":[
         {
             "matches":["*://*/*"],
             "css":[],
-            "js":["interrupt_timer.js"]
+            "js":["interrupt.js"]
         }
     ]
 }
