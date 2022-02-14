@@ -6,47 +6,43 @@ Having 'last_executed' being a timer instead of a boolean is so that in the futu
 
 var interrupt_list = ["https://www.youtube.com/", "https://www.reddit.com/"]
 var alternative_list = ["https://medium.com/", "https://github.com/TimAmadeoSobania?tab=repositories"]
-var last_executed = window.sessionStorage.getItem("last_executed");
+
 console.log("new load");
-console.log((new Date - last_executed));
+var start = new Date;
 
-//execute this only once in a new session
-//while(1){
-  console.log("time since last execute:" + new Date - last_executed);
-  if(interrupt_list.includes(window.location.href) && (last_executed == null || (new Date - last_executed) > 10000)){
-    console.log("last_executed" + (last_executed));
-    var start = new Date;
-    //start interval
-    myInterval = setInterval(interrupt, 1000);
+//execute once and then recheck the site every x ms
+check_site();
+setInterval(check_site, 1000*60)
+
+function check_site() {
+  let le = localStorage.getItem("last_executed");
+  //is this a forbidden website and has the script never been executed or is the last execute more then x seconds ago
+  if(interrupt_list.includes(window.location.href) && (le == null || (Date.now() - le)/1000 > 60*15 )) {
+    start = new Date;
+    //start countdown and update every second
+    countdown = setInterval(interrupt, 1000);
   }
-  //sleep(20000);
-//}
-
+}
+ 
 function interrupt() {
   let interrupt_timer = 10000;
+  console.log("interrrupted" + start);
+  console.log((interrupt_timer - (new Date - start))/1000);
   //if timer has expired
   if ((interrupt_timer - (new Date - start))/1000 < 1){
-    window.sessionStorage.setItem("last_executed", new Date)
+    localStorage.setItem("last_executed" , Date.now());
     //reload the page
     window.location.reload(false);
-    clearInterval(myInterval);
+    clearInterval(countdown);
   }
   else{
     //else display message with timer in seconds
     let timer_string = "If you really want to waste your time here wait for " + Math.trunc((interrupt_timer - (new Date - start))/1000) + " seconds.";
     let alternatives_string = "Maybe you rather want to look at this: ";
-    let end_string = "...or do that something you really NEED to do."
+    let end_string = "...or do that something you really NEED to do.";
     for(let i = 0; i < alternative_list.length; i++){
       alternatives_string += alternative_list[i].link(alternative_list[i]) + " ";
     }
     document.querySelector('html').innerHTML = '<h2>Youtube interrupt</h2> <p>' + timer_string + '</p> <p>' + alternatives_string + '</p> <p>' + end_string + '</p>';
   }
-}
-
-function sleep(milliseconds) {
-  const date = Date.now();
-  let currentDate = null;
-  do {
-    currentDate = Date.now();
-  } while (currentDate - date < milliseconds);
 }
