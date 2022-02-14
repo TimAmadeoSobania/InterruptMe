@@ -11,13 +11,16 @@ console.log("new load");
 console.log((new Date - last_executed));
 
 //execute this only once in a new session
-if(interrupt_list.includes(window.location.href) && (last_executed == null || (new Date - last_executed) > 10000)){
-  console.log("new timer");
-  console.log((new Date - last_executed));
-  var start = new Date;
-  //start interval
-  myInterval = setInterval(interrupt, 1000);
-}
+//while(1){
+  console.log("time since last execute:" + new Date - last_executed);
+  if(interrupt_list.includes(window.location.href) && (last_executed == null || (new Date - last_executed) > 10000)){
+    console.log("last_executed" + (last_executed));
+    var start = new Date;
+    //start interval
+    myInterval = setInterval(interrupt, 1000);
+  }
+  //sleep(20000);
+//}
 
 function interrupt() {
   let interrupt_timer = 10000;
@@ -30,7 +33,7 @@ function interrupt() {
   }
   else{
     //else display message with timer in seconds
-    let timer_string = "If you really want to waste your time on Youtube wait for " + Math.trunc((interrupt_timer - (new Date - start))/1000) + " seconds.";
+    let timer_string = "If you really want to waste your time here wait for " + Math.trunc((interrupt_timer - (new Date - start))/1000) + " seconds.";
     let alternatives_string = "Maybe you rather want to look at this: ";
     let end_string = "...or do that something you really NEED to do."
     for(let i = 0; i < alternative_list.length; i++){
@@ -38,4 +41,12 @@ function interrupt() {
     }
     document.querySelector('html').innerHTML = '<h2>Youtube interrupt</h2> <p>' + timer_string + '</p> <p>' + alternatives_string + '</p> <p>' + end_string + '</p>';
   }
+}
+
+function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < milliseconds);
 }
