@@ -15,9 +15,12 @@ check_site();
 setInterval(check_site, 1000*60)
 
 function check_site() {
-  let le = localStorage.getItem("last_executed");
+  let le = sessionStorage.getItem("last_executed");
+  console.log("list: " + interrupt_list);
+  console.log("le: " + le);
   //is this a forbidden website and has the script never been executed or is the last execute more then x seconds ago
   if(interrupt_list.includes(window.location.href) && (le == null || (Date.now() - le)/1000 > 60*15 )) {
+    console.log("should be interrupted");
     start = new Date;
     //start countdown and update every second
     countdown = setInterval(interrupt, 1000);
@@ -30,7 +33,7 @@ function interrupt() {
   console.log((interrupt_timer - (new Date - start))/1000);
   //if timer has expired
   if ((interrupt_timer - (new Date - start))/1000 < 1){
-    localStorage.setItem("last_executed" , Date.now());
+    sessionStorage.setItem("last_executed" , Date.now());
     //reload the page
     window.location.reload(false);
     clearInterval(countdown);
@@ -43,6 +46,15 @@ function interrupt() {
     for(let i = 0; i < alternative_list.length; i++){
       alternatives_string += alternative_list[i].link(alternative_list[i]) + " ";
     }
-    document.querySelector('html').innerHTML = '<h2>Youtube interrupt</h2> <p>' + timer_string + '</p> <p>' + alternatives_string + '</p> <p>' + end_string + '</p>';
+    //document.querySelector('html').innerHTML = '<h2>Youtube interrupt</h2> <p>' + timer_string + '</p> <p>' + alternatives_string + '</p> <p>' + end_string + '</p>';
+    let newHTML = document.open();
+    newHTML.write('<h2 id="title">Youtube interrupt</h2> <timer id="timer">' 
+      + timer_string 
+      + '</timer> <alternatives id="alternatives">' 
+      + alternatives_string 
+      + '</alternatives> <end_string id="end_str">' 
+      + end_string 
+      + '</end_string>');
+    newHTML.close();
   }
 }

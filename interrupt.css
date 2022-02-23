@@ -1,0 +1,33 @@
+
+
+h2 {
+    display: block;
+    width: 100%;
+    height: 15%;
+    float: left;
+    text-align: center;
+}
+
+timer {
+    display: block;
+    width: 100%;
+    height: 2%;
+    float: left;
+    text-align: center;
+}
+
+alternatives {
+    display: block;
+    width: 100%;
+    height: 2%;
+    float: left;
+    text-align: center;
+}
+
+end_string {
+    display: block;
+    width: 100%;
+    height: 2%;
+    float: left;
+    text-align: center;
+}
