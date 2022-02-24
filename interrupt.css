@@ -11,23 +11,35 @@ h2 {
 timer {
     display: block;
     width: 100%;
+    height: 10%;
+    float: left;
+    text-align: center;
+}
+
+alternatives_title {
+    display: block;
+    width: 100%;
     height: 2%;
     float: left;
     text-align: center;
 }
 
-alternatives {
+ul {
     display: block;
-    width: 100%;
-    height: 2%;
+    width: 95%;
+    height:fit-content;
+    list-style-position: inside;
+    border: 2mm;
     float: left;
     text-align: center;
 }
 
 end_string {
     display: block;
+    position: fixed;
+    bottom: 0;
     width: 100%;
-    height: 2%;
+    height: 10%;
     float: left;
     text-align: center;
 }

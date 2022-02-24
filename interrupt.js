@@ -41,20 +41,29 @@ function interrupt() {
   else{
     //else display message with timer in seconds
     let timer_string = "If you really want to waste your time here wait for " + Math.trunc((interrupt_timer - (new Date - start))/1000) + " seconds.";
-    let alternatives_string = "Maybe you rather want to look at this: ";
-    let end_string = "...or do that something you really NEED to do.";
+    let alternatives_string = "";
     for(let i = 0; i < alternative_list.length; i++){
-      alternatives_string += alternative_list[i].link(alternative_list[i]) + " ";
+      alternatives_string += "<li>" + alternative_list[i].link(alternative_list[i]) + "</li>";
     }
     //document.querySelector('html').innerHTML = '<h2>Youtube interrupt</h2> <p>' + timer_string + '</p> <p>' + alternatives_string + '</p> <p>' + end_string + '</p>';
     let newHTML = document.open();
-    newHTML.write('<h2 id="title">Youtube interrupt</h2> <timer id="timer">' 
+    newHTML.write(
+      '<h2 id="title">Youtube interrupt</h2>'
+      + '<timer id="timer">' 
       + timer_string 
-      + '</timer> <alternatives id="alternatives">' 
+      + '</timer>'
+
+      + '<alternatives_title id="alternatives_title">'
+      + "Maybe you rather want to look at this: "
+      + '</alternatives_title>'
+      + '<ul>' 
       + alternatives_string 
-      + '</alternatives> <end_string id="end_str">' 
-      + end_string 
+      + '</ul>'
+
+      + '<end_string id="end_str">' 
+      + "...or do that something you really NEED to do."
       + '</end_string>');
+
     newHTML.close();
   }
 }
