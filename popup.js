@@ -1,31 +1,40 @@
 
 function add(){
-    let length = interrupt_list.length;
+    let forbidden_list = chrome.storage.sync.get("forbidden_list");
+    alert(forbidden_list);
+    let length = forbidden_list.length;
     
-    if (interrupt_list.includes(window.location.href)){
-        alert("This Site is already a forbidden fruit.")
+    if (forbidden_list.includes(window.location.href)){
+        alert("This Site is already a forbidden fruit.");
     }
     else{
-        if (length == interrupt_list.push(window.location.href)){
-            alert("Error. Site could not be added.")
+        if (length == forbidden_list.push(window.location.href)){
+            alert("Error. Site could not be added.");
         }
         else{
-            alert("Site has been added.")
+            chrome.storage.sync.set({"forbidden_list": forbidden_list});
+            alert("Site has been added.");
         }
     }
+
+    console.log("list: " + forbidden_list);
 }
 
 function rem(){
-    let length = interrupt_list.length;
+    let forbidden_list = chrome.storage.sync.get("forbidden_list");
+    let length = forbidden_list.length;
     
-    const index = interrupt_list.indexOf(window.location.href);
+    const index = forbidden_list.indexOf(window.location.href);
     if (index > -1) {
-        interrupt_list.splice(index, 1); // 2nd parameter means remove one item only
-        alert("Site has been removed.")
+        forbidden_list.splice(index, 1); // 2nd parameter means remove one item only
+        chrome.storage.sync.set({"forbidden_list": forbidden_list});
+        alert("Site has been removed.");
     }
     else{
-        alert("Error. Site could not be removed.")
+        alert("Error. Site could not be removed.");
     }
+
+    console.log("list: " + forbidden_list);
 }
 
 
